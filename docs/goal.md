@@ -1,14 +1,7 @@
-# Authoritative Engineering Blueprint & Precise Implementation Guide
-## Version 3 — Systems Architecture Recommendation (as of 2026-08-01)
+# "PLANNER AI" GOAL SPECIFICATION AND EXECUTION CONTRACT - AUGUST 1 2026. EXECUTE IMMEDIATELY.
 
-**Target System**: High-volume, utility-first AI chat agent for real-world kitchen planning.  
-**Core Requirements**: Extreme Token Efficiency (~50% fewer steps, ~4× fewer output tokens on high-volume loops) + Commoditized Intelligence Pricing (flash/mid-tier effective cost for near-Opus capability on background loops).  
-**Primary Stack Preference**: C++ for the agent runtime.  
-**User Flow Priority**: Accurate floorplan/layout → 2D/3D space reconstruction is the non-negotiable foundation. Failure here invalidates all subsequent steps.
 
-This Version 3 fully replaces the previous CubiCasa5K + OpenCV recommendation with **Raster2Seq** as the sole primary polygon extraction engine. Secondary and hybrid options are rejected. Backward compatibility with Version 1 and Version 2 is not preserved. The design chooses the simplest implementation that fully meets requirements and prefers established, well-maintained libraries.
-
----
+# Objective: Build the complete system described in the Authoritative Engineering Blueprint & Precise Implementation Guide — Version 3 (2026-08-01).
 
 ## 1. Goals, Constraints & Success Criteria
 
@@ -31,9 +24,35 @@ This Version 3 fully replaces the previous CubiCasa5K + OpenCV recommendation wi
 - Token/cost metrics: measurable reduction vs naïve multi-hop baselines on repeated design iterations.
 - Deployable via Docker Compose or Helm with the listed components.
 
----
+# Authoritative Engineering Blueprint & Precise Implementation Guide
+## Systems Architecture Recommendation (as of 2026-08-01)
 
-## 2. Architecture Overview (Version 3)
+**Target System**: High-volume, utility-first AI chat agent for real-world kitchen planning.  
+**Core Requirements**: Extreme Token Efficiency (~50% fewer steps, ~4× fewer output tokens on high-volume loops) + Commoditized Intelligence Pricing (flash/mid-tier effective cost for near-Opus capability on background loops).  
+**Primary Stack Preference**: C++ for the agent runtime.  
+**User Flow Priority**: Accurate floorplan/layout → 2D/3D space reconstruction is the non-negotiable foundation. Failure here invalidates all subsequent steps.
+
+## Workspace
+`/Users/shayanbozorgmanesh/Developer/planner-ai`
+
+## Authoritative sources (read from disk — do NOT restate in full)
+1. `docs/goal.md` — Version 3 blueprint (sole architecture authority)
+2. `AGENTS.md` + `docs/agents/*` — issue tracker (local `.scratch/`), triage labels, domain docs
+3. Existing vendored trees under this workspace (prefer integrate over re-clone when present):
+   `Raster2Seq/`, `llama.cpp/`, `llama-agent/`, `chatllm.cpp/`, `open-webui/`, `openPlan3D/`, `three.js/`, `pgvector/`, `cosmos-framework/`, `helm-charts/`, etc.
+
+## CRITICAL RULES (non-negotiable):
+- Do not preserve backward compatibility with any previous version.
+- Choose the simplest implementation that fully meets the current requirements.
+- Prefer established, well-maintained libraries over custom implementation.
+- C++ is the primary agent runtime (llama.cpp (https://github.com/ggml-org/llama.cpp) + llama-agent (https://github.com/gary149/llama-agent) / chatllm.cpp (https://github.com/foldl/chatllm.cpp) style).
+- Frontend is Open WebUI (SvelteKit) (https://github.com/open-webui/open-webui.git).
+- Floorplan reconstruction engine is Raster2Seq (https://github.com/Cornell-VAILab/Raster2Seq.git).
+- Single-process C++ agent loop is mandatory for Extreme Token Efficiency. Controlled parallel tool calls are allowed; full multi-agent graphs are not on the critical path.
+- High-volume autonomous loops must never touch the portal.
+- Every recommendation and code path must be executable on 2026-08-01.
+
+## 2. Architecture Overview
 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
@@ -75,8 +94,6 @@ This Version 3 fully replaces the previous CubiCasa5K + OpenCV recommendation wi
 - Interactive chat, planning, refinement, storage reasoning → Grok-4.5.  
 - One-shot kitchen synthesis / high-fidelity generation → Cosmos 3 (prefer Cosmos Nano or Cosmos 4-Step distilled).  
 - High-volume autonomous loops stay inside the C++ runtime and never touch the portal.
-
----
 
 ## 3. Critical Task Analysis & Superior Solutions (2026-08-01)
 
@@ -209,7 +226,7 @@ These are additive and do not replace the core C++ runtime or Open WebUI portal.
 
 ---
 
-## 5. Precise Implementation Phases (Version 3)
+## 5. Precise Implementation Phases
 
 ### Phase 0 – Environment
 ```bash
@@ -352,9 +369,7 @@ docker compose up -d
 | Three.js | https://threejs.org | Web 3D rendering |
 | Neon | https://neon.tech | Postgres + pgvector data plane |
 
----
-
-**This Version 3 is the authoritative, hardened, and complete engineering blueprint.**  
+**This Document is the authoritative, hardened, and complete engineering blueprint.**  
 It prioritizes accurate floorplan reconstruction via Raster2Seq (https://github.com/Cornell-VAILab/Raster2Seq) as the non-negotiable foundation, selects the production-proven catalog-mapping leaders available on 2026-08-01, retains single-process C++ efficiency while allowing controlled parallelism, and incorporates additional established tooling that measurably improves UX and geometric fidelity.  
 
 Execute the phases in order. The resulting system meets every stated requirement for Extreme Token Efficiency, Commoditized Intelligence Pricing, and the full kitchen planning user flow.
