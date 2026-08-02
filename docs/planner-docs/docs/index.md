@@ -3,7 +3,7 @@
 **Objective:** Build the complete system described in the Authoritative Engineering Blueprint & Precise Implementation Guide.
 
 ## Workspace Context
-* **Local Path:** `/Users/shayanbozorgmanesh/Developer/planner-ai`
+* **Workspace:** repository root of this project (local clone path varies)
 
 ## Authoritative Core Sources
 1. `docs/goal.md` (sole architecture authority)

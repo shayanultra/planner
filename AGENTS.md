@@ -1204,7 +1204,7 @@ VALUES ('system', 'layout.build_and_persist', $layout_id, true, $ms, $detail_jso
 ## Verification hooks (as-built)
 
 ```bash
-cd /Users/shayanbozorgmanesh/Developer/planner-ai
+cd "$(git rev-parse --show-toplevel)"
 .venv/bin/pytest tests/ -m "not integration" -q
 # Expect: 39 passed (Slice A unit path) as of closeout 85745c4 era
 ```

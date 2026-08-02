@@ -29,7 +29,7 @@
 **User Flow Priority**: Accurate floorplan/layout → 2D/3D space reconstruction with 98% accuracy is the non-negotiable foundation.
 
 ## Workspace
-`/Users/shayanbozorgmanesh/Developer/planner-ai`
+Repository root of this project (clone path is local; do not hardcode machine paths).
 
 ## Authoritative sources (read from disk — do NOT restate in full)
 1. `docs/goal.md` (sole architecture authority)
