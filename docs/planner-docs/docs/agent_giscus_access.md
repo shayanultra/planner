@@ -41,6 +41,8 @@ docs/planner-docs/scripts/post_uttr_comment.sh \
 
 ### MCP fallback (comment only)
 
+**Prefer MCP `github__discussion_comment_write` when `GH_TOKEN` is set** (fine-grained PATs often lack Discussions write and make `gh` / `post_uttr_comment.sh` fail with FORBIDDEN).
+
 When `gh` GraphQL is forbidden but MCP works:
 
 - Tool: `github__discussion_comment_write`
