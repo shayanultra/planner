@@ -1,8 +1,8 @@
 # =============================================================================
 # planner-ai — root .gitignore (GitHub-safe product monorepo)
 # =============================================================================
-# Product surface: services/, tests/, db/, docs/goal|adr|agents|session|templates,
-# AGENTS.md, CONTEXT.md, openwiki/, .scratch/, .github/, .agents/
+# Product surface: services/, tests/, db/, docs/goal|adr|agents|templates,
+# AGENTS.md, CONTEXT.md, openwiki/, .github/, .agents/
 # Vendored upstream clones stay local (nested .git); do not push as gitlinks.
 # Architecture authority: docs/goal.md · Agent ops: AGENTS.md
 # =============================================================================
@@ -70,7 +70,10 @@ node_modules/
 .turbo/
 dist-ssr/
 
-# --- Local issue-tracker claim locks ---
+# --- Local-only process artifacts (not for public GitHub) ---
+docs/session/
+.scratch/
+# claim locks (redundant if .scratch/ ignored; kept for clarity)
 .scratch/**/claimed-by
 
 # --- Large reference PDFs under docs/ (keep intentional .md docs) ---
@@ -98,6 +101,7 @@ json-render/
 next-beats/
 bike-shop-agent/
 kitchen-designer/
+grok-build/
 
 # Third-party / research clones under docs/ (multi-GB; not product docs)
 docs/cosmos/
