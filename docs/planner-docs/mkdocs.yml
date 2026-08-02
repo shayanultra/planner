@@ -27,6 +27,7 @@ nav:
   - 'Project Overview':
     - 'Manifest Home': index.md
     - 'Goals & Success Criteria': 01_goals_criteria.md
+    - 'Agent Giscus Access': agent_giscus_access.md
   - 'Core Engineering Authority':
     - 'System Overview': 02_system_overview.md
     - 'Architecture Overview': 03_architecture_overview.md

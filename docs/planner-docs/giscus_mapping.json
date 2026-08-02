@@ -1,0 +1,146 @@
+{
+  "repo": "shayanultra/planner",
+  "repo_id": "R_kgDOTrARYQ",
+  "category": "Ideas",
+  "category_id": "DIC_kwDOTrARYc4DCgqB",
+  "mapping": "pathname",
+  "strict": true,
+  "site_base": "/planner",
+  "site_url": "https://shayanultra.github.io/planner/",
+  "agent_contract": {
+    "read_this_file": "docs/planner-docs/giscus_mapping.json",
+    "post_via": [
+      "docs/planner-docs/scripts/post_uttr_comment.sh",
+      "gh api graphql (addDiscussionComment)",
+      "MCP github__discussion_comment_write method=add"
+    ],
+    "never": "browser automation / giscus DOM",
+    "uttr_template": "docs/templates/uttr-blueprint.md",
+    "required_token_scopes": [
+      "Discussions: Read and write (fine-grained) OR write:discussion (classic)"
+    ]
+  },
+  "legacy_discussions": {
+    "PLANNER": {
+      "discussion_id": "D_kwDOTrARYc4AoNUr",
+      "number": 1,
+      "url": "https://github.com/shayanultra/planner/discussions/1",
+      "title": "PLANNER",
+      "note": "Not pathname-aligned with Giscus strict mapping; do not use for page UTTR posts"
+    }
+  },
+  "pages": {
+    "index": {
+      "pathname": "/planner/",
+      "md": "docs/planner-docs/docs/index.md",
+      "docs_url": "https://shayanultra.github.io/planner/",
+      "discussion_id": null,
+      "number": null,
+      "url": null
+    },
+    "01_goals_criteria": {
+      "pathname": "/planner/01_goals_criteria/",
+      "md": "docs/planner-docs/docs/01_goals_criteria.md",
+      "docs_url": "https://shayanultra.github.io/planner/01_goals_criteria/",
+      "discussion_id": null,
+      "number": null,
+      "url": null
+    },
+    "02_system_overview": {
+      "pathname": "/planner/02_system_overview/",
+      "md": "docs/planner-docs/docs/02_system_overview.md",
+      "docs_url": "https://shayanultra.github.io/planner/02_system_overview/",
+      "discussion_id": null,
+      "number": null,
+      "url": null
+    },
+    "03_architecture_overview": {
+      "pathname": "/planner/03_architecture_overview/",
+      "md": "docs/planner-docs/docs/03_architecture_overview.md",
+      "docs_url": "https://shayanultra.github.io/planner/03_architecture_overview/",
+      "discussion_id": null,
+      "number": null,
+      "url": null
+    },
+    "04_task_seq_1": {
+      "pathname": "/planner/04_task_seq_1/",
+      "md": "docs/planner-docs/docs/04_task_seq_1.md",
+      "docs_url": "https://shayanultra.github.io/planner/04_task_seq_1/",
+      "discussion_id": null,
+      "number": null,
+      "url": null
+    },
+    "05_task_seq_2": {
+      "pathname": "/planner/05_task_seq_2/",
+      "md": "docs/planner-docs/docs/05_task_seq_2.md",
+      "docs_url": "https://shayanultra.github.io/planner/05_task_seq_2/",
+      "discussion_id": null,
+      "number": null,
+      "url": null
+    },
+    "06_tooling": {
+      "pathname": "/planner/06_tooling/",
+      "md": "docs/planner-docs/docs/06_tooling.md",
+      "docs_url": "https://shayanultra.github.io/planner/06_tooling/",
+      "discussion_id": null,
+      "number": null,
+      "url": null
+    },
+    "07_implementation": {
+      "pathname": "/planner/07_implementation/",
+      "md": "docs/planner-docs/docs/07_implementation.md",
+      "docs_url": "https://shayanultra.github.io/planner/07_implementation/",
+      "discussion_id": null,
+      "number": null,
+      "url": null
+    },
+    "08_user_flow": {
+      "pathname": "/planner/08_user_flow/",
+      "md": "docs/planner-docs/docs/08_user_flow.md",
+      "docs_url": "https://shayanultra.github.io/planner/08_user_flow/",
+      "discussion_id": null,
+      "number": null,
+      "url": null
+    },
+    "09_readiness": {
+      "pathname": "/planner/09_readiness/",
+      "md": "docs/planner-docs/docs/09_readiness.md",
+      "docs_url": "https://shayanultra.github.io/planner/09_readiness/",
+      "discussion_id": null,
+      "number": null,
+      "url": null
+    },
+    "10_sources": {
+      "pathname": "/planner/10_sources/",
+      "md": "docs/planner-docs/docs/10_sources.md",
+      "docs_url": "https://shayanultra.github.io/planner/10_sources/",
+      "discussion_id": null,
+      "number": null,
+      "url": null
+    },
+    "11_citation": {
+      "pathname": "/planner/11_citation/",
+      "md": "docs/planner-docs/docs/11_citation.md",
+      "docs_url": "https://shayanultra.github.io/planner/11_citation/",
+      "discussion_id": null,
+      "number": null,
+      "url": null
+    },
+    "AGENTS": {
+      "pathname": "/planner/AGENTS/",
+      "md": "docs/planner-docs/docs/AGENTS.md",
+      "docs_url": "https://shayanultra.github.io/planner/AGENTS/",
+      "discussion_id": null,
+      "number": null,
+      "url": null
+    },
+    "RAGnaroX": {
+      "pathname": "/planner/RAGnaroX/",
+      "md": "docs/planner-docs/docs/RAGnaroX.md",
+      "docs_url": "https://shayanultra.github.io/planner/RAGnaroX/",
+      "discussion_id": null,
+      "number": null,
+      "url": null
+    }
+  }
+}
