@@ -1,5 +1,9 @@
 ## Agent skills
 
+- Do not preserve backward compatibility.
+- Choose the simplest implementation that fully meets the current requirements.
+- Prefer established, well-maintained libraries over custom implementation.
+
 ### Issue tracker
 
 Issues live as local markdown under `.scratch/<feature>/`. See `docs/agents/issue-tracker.md`.
