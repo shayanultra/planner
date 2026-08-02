@@ -1,17 +1,14 @@
 # "PLANNER AI" GOAL SPECIFICATION AND EXECUTION CONTRACT - AUGUST 1 2026. EXECUTE IMMEDIATELY.
 
-
-# Objective: Build the complete system described in the Authoritative Engineering Blueprint & Precise Implementation Guide — Version 3 (2026-08-01).
+**Objective:** Build the complete system described in the Authoritative Engineering Blueprint & Precise Implementation Guide.
 
 ## 1. Goals, Constraints & Success Criteria
 
 ### Goals
 - Deliver the complete user flow with deterministic accuracy on floorplan reconstruction.
-- Support text, image, and PDF floorplan inputs that produce identical accurate 2D + 3D reconstructions.
-- One-shot kitchen system generation constrained to the reconstructed layout + catalog products, weighted 70–80% storage maximization and 20–30% design-feel adherence from inspiration image(s).
-- Target ≥95% match to user desire on the first complete kitchen output (verified by subsequent user engagement, not disengagement).
+- Support multi-modal inputs that produce identical accurate 2D + 3D reconstructions.
+- Room layout and kitchen system generation.
 - Extreme Token Efficiency and Commoditized Pricing on high-volume autonomous loops.
-- Production-ready, deployable end-to-end from this document alone on 2026-08-01.
 
 ### Non-Goals
 - Training new foundation models.
@@ -19,41 +16,38 @@
 - Supporting every regional building code on day one.
 
 ### Success Criteria
-- Floorplan reconstruction accuracy: geometric fidelity sufficient for subsequent catalog placement (walls, openings, scale recoverable or user-correctable).
-- Kitchen output: complete, catalog-compliant system; storage-optimized; design-feel aligned.
+- Floorplan reconstruction and geometric fidelity with 98% accuracy or greater.
+- Full kitchen design generation: catalog-compliant system; storage-optimized; design-feel aligned.
 - Token/cost metrics: measurable reduction vs naïve multi-hop baselines on repeated design iterations.
-- Deployable via Docker Compose or Helm with the listed components.
 
 # Authoritative Engineering Blueprint & Precise Implementation Guide
 ## Systems Architecture Recommendation (as of 2026-08-01)
 
-**Target System**: High-volume, utility-first AI chat agent for real-world kitchen planning.  
+**Target System**: Performance, utility-first AI chat agent for real-world kitchen planning.
 **Core Requirements**: Extreme Token Efficiency (~50% fewer steps, ~4× fewer output tokens on high-volume loops) + Commoditized Intelligence Pricing (flash/mid-tier effective cost for near-Opus capability on background loops).  
 **Primary Stack Preference**: C++ for the agent runtime.  
-**User Flow Priority**: Accurate floorplan/layout → 2D/3D space reconstruction is the non-negotiable foundation. Failure here invalidates all subsequent steps.
+**User Flow Priority**: Accurate floorplan/layout → 2D/3D space reconstruction with 98% accuracy is the non-negotiable foundation.
 
 ## Workspace
 `/Users/shayanbozorgmanesh/Developer/planner-ai`
 
 ## Authoritative sources (read from disk — do NOT restate in full)
-1. `docs/goal.md` — Version 3 blueprint (sole architecture authority)
+1. `docs/goal.md` (sole architecture authority)
 2. `AGENTS.md` + `docs/agents/*` — issue tracker (local `.scratch/`), triage labels, domain docs
-3. Existing vendored trees under this workspace (prefer integrate over re-clone when present):
-   `Raster2Seq/`, `llama.cpp/`, `llama-agent/`, `chatllm.cpp/`, `open-webui/`, `openPlan3D/`, `three.js/`, `pgvector/`, `cosmos-framework/`, `helm-charts/`, etc.
+3. `docs/session/*` - session handoffs.
+4. `docs/openwiki/*` - agent documentation for the codebase. 
 
 ## CRITICAL RULES (non-negotiable):
-- Do not preserve backward compatibility with any previous version.
+- Do not preserve backward compatibility.
 - Choose the simplest implementation that fully meets the current requirements.
 - Prefer established, well-maintained libraries over custom implementation.
-- C++ is the primary agent runtime (llama.cpp (https://github.com/ggml-org/llama.cpp) + llama-agent (https://github.com/gary149/llama-agent) / chatllm.cpp (https://github.com/foldl/chatllm.cpp) style).
-- Frontend is Open WebUI (SvelteKit) (https://github.com/open-webui/open-webui.git).
-- Floorplan reconstruction engine is Raster2Seq (https://github.com/Cornell-VAILab/Raster2Seq.git).
-- Single-process C++ agent loop is mandatory for Extreme Token Efficiency. Controlled parallel tool calls are allowed; full multi-agent graphs are not on the critical path.
-- High-volume autonomous loops must never touch the portal.
-- Every recommendation and code path must be executable on 2026-08-01.
+- Llama.cpp C++ primary agent runtime.
+- Open WebUI SvelteKit Frontend.
+- Raster2Seq floorplan reconstruction engine (https://github.com/Cornell-VAILab/Raster2Seq.git).
+- Single-process C++ agent loop for Extreme Token Efficiency.
+- Autonomous loops must never touch the user-facing chat interface portal.
 
 ## 2. Architecture Overview
-
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
 │  User-Facing Portal                                                 │
@@ -99,60 +93,51 @@
 
 ### 3.1 Task Sequence 1 — `parse_and_map_floorplan`
 
-**Requirement**: User text / image / PDF input must produce the *identical accurate* 2D + 3D space reconstruction. This step has no relation to the catalog. The 2D viewer is primary; 3D is automatically derived from the verified 2D geometry.
-
-**Superior Production Solution (verified 2026-08-01)**: Raster2Seq
-
-**Canonical / reference implementation pattern**:  
-https://github.com/Cornell-VAILab/Raster2Seq
-
-**Paper**: Raster2Seq: Polygon Sequence Generation for Floorplan Reconstruction (SIGGRAPH 2026) — https://arxiv.org/abs/2602.09016  
-**Project page**: https://cornell-vailab.github.io/Raster2Seq/  
-**Weights**: https://huggingface.co/haopt/Raster2Seq
+**Requirement**: User multi-modal input input produces 98% accuracy 2D reconstruction.
+**Superior Production Solution (verified 2026-08-01)**: Raster2Seq.
+**Raster2Seq official github**: https://github.com/Cornell-VAILab/Raster2Seq
+**Raster2Seq paper**: https://arxiv.org/abs/2602.09016  
+**Raster2Seq website**: https://cornell-vailab.github.io/Raster2Seq/  
+**Raster2Seq weights**: https://huggingface.co/haopt/Raster2Seq
 
 #### Core Reconstruction Pipeline (Raster2Seq)
 
-1. **Input Normalization**  
-   - PDF → raster image via established tools (pdf2image / Poppler).  
-   - Text description → VLM (Grok-4.5 or Cosmos Reasoner) emits structured wall/opening description that is rendered or directly tokenized into the Raster2Seq input path.  
+1. **Input Normalization**
    - Image → direct to Raster2Seq.
 
 2. **Core Reconstruction Engine**  
-   - **Model**: Raster2Seq (autoregressive sequence-to-sequence model that represents floorplan elements as labeled polygon sequences jointly encoding geometry and semantics).  
-     - Primary checkpoint: CubiCasa5K-trained (`cubicasa5k` key on https://huggingface.co/haopt/Raster2Seq).  
-     - Alternative high-quality checkpoints: Structured3D-B, Raster2Graph (available at the same Hugging Face repository).  
-   - **Canonical code**: https://github.com/Cornell-VAILab/Raster2Seq  
-   - Raster2Seq predicts ordered, labeled polygons (rooms, doors, windows) with superior Room / Corner / Angle F1 scores compared with prior methods (RoomFormer, HEAT, FRI-Net, PolyRoom).  
-   - Optional light classical cleanup (Douglas-Peucker + area filter) may be applied for final polygon polishing only; it is not the primary extraction method.
+- **Model**: Raster2Seq.
+- Primary checkpoint: CubiCasa5K-trained (`cubicasa5k` key on https://huggingface.co/haopt/Raster2Seq).  
 
-3. **Metric / scale recovery**  
-   - User confirmation of one known dimension or VLM-assisted scale estimation; store recoverable scale factor in the layout record.
+3. **2D View (Konva.js)**  
+- Structured HTML5 directly from the Raster2Seq polygon sequences.
+- 2D View (Konva.js)Reads the JSON. Renders a simple Rect at (x, y). Very fast, no 3D overhead.
+- Layer 1 (Grid): Static background.
+- Layer 2 (Walls): Lines and Paths (using Konva.Line).
+- Layer 3 (Furniture): Konva.Image nodes representing the cabinets top-down.
+- Logic: When user drops a cabinet, save its { x, y, rotation, sku_id } to React State.
 
-4. **2D Viewer**  
-   - Structured SVG or canvas representation of walls, doors, windows, rooms generated directly from the Raster2Seq polygon sequences.
+4. Database (Neon) - The Single Source of Truth:
+- Stores JSON metadata + URLs to GLB files (on CDN).
+- Neon Postgres database stores a JSON "Scene State" describing the room:
+- { "cabinets": [ { "id": "cab_001", "x": 10, "y": 0, "model_url": "cdn.site.com/cab.glb" } ] }
 
-5. **3D Derivation**  
-   - Deterministic extrusion of the verified 2D polygons into a Three.js scene (walls at full height, doors/windows at correct sill/lintel).  
-   - Strong complementary viewer: https://github.com/laanlabs/openPlan3D (SvelteKit + Three.js, open-source 2D/3D floor-plan editor).
+5. CDN (S3/R2): Store the GLB files on a CDN. 
+- Store only the URL (e.g., https://cdn.yoursite.com/cabinet_01.glb) in Neon.
+- Result: The browser downloads the model directly from the edge server (CDN) in parallel, bypassing your backend entirely.
 
-#### Why this is superior
-
-- Raster2Seq is the clear state-of-the-art for raster-to-vector floorplan reconstruction as of SIGGRAPH 2026 (https://arxiv.org/abs/2602.09016).  
-- On CubiCasa5K it achieves Room F1 88.7 (vs RoomFormer 83.5); on Structured3D-B it achieves Room F1 99.6 / Corner F1 98.3 (vs RoomFormer 95.1 / 91.7).  
-- It demonstrates greater robustness as the number of rooms and corners increases, and stronger zero-shot generalization to real-world floorplans (WAFFLE).  
-- The output is already ordered, labeled polygon sequences — ideal for deterministic 2D SVG generation and subsequent Three.js extrusion.  
-- Separating 2D verification from 3D extrusion still allows the user (or a lightweight reviewer tool) to correct geometry before any catalog work begins.  
-- HouseCrafter-style diffusion lifting remains reserved for later high-fidelity textured scene enhancement; it is not part of the critical path.
+5. **3D View (Three.js)**  
+- Listens to the same React State.
+- When visible, it iterates the state and loads the corresponding GLB files for each sku_id.
+- User clicks "3D". Three.js initializes. It iterates through the same JSON list.
+- Optimization: It uses InstancedMesh. If the user has 20 identical "Base Cabinet" units, Three.js loads the GLB once and draws it 20 times at zero extra GPU cost.
+- Uses GLTFLoader combined with Draco Compression (a small Wasm decoder). This reduces your cabinet file size by ~40% and decodes it on a background thread.
+- Best for "interchangeable views" because it can spin up/down in milliseconds.
+- Strong complementary viewer: https://github.com/laanlabs/openPlan3D (SvelteKit + Three.js, open-source 2D/3D floor-plan editor).
 
 **Libraries / Frameworks the model must call (exact sequence)**:
-1. Input loader / PDF rasterizer (pdf2image or Poppler).  
-2. Raster2Seq inference (official code from https://github.com/Cornell-VAILab/Raster2Seq + checkpoint from https://huggingface.co/haopt/Raster2Seq).  
-3. Optional light Douglas-Peucker + area filter.  
-4. Scale recovery + validation.  
-5. Write structured layout JSON (polygons + semantics + scale) to Postgres.  
-6. Emit 2D SVG + Three.js scene graph for the portal viewer.
-
-**Model for this step**: Raster2Seq is the sole primary engine. Grok-4.5 / Cosmos Reasoner are used only for text/PDF structured extraction and validation when the input is not already a clean raster image.
+1. Raster2Seq inference (official code from https://github.com/Cornell-VAILab/Raster2Seq + checkpoint from https://huggingface.co/haopt/Raster2Seq).  
+2. Write structured layout JSON (polygons + semantics + scale) to Postgres.  
 
 ### 3.2 Task Sequence 2 — `optimize_kitchen` (Finishes + Inspiration → Complete System)
 
@@ -161,32 +146,16 @@ https://github.com/Cornell-VAILab/Raster2Seq
 - (2-b) Agent plans → reviews → tests → implements the optimized kitchen.  
 - (2-c) Complete system rendered in one shot only after verification.
 
-**Weighting**: 70–80% storage / space maximization within the already-mapped floorplan constraints; 20–30% adherence to design feel from inspiration. First output must target ≥95% match to true user desire.
-
 **Superior Production Leader for Single-Image → Extreme Token Efficiency Catalog Mapping (2026-08-01)**:
 
-1. **Aesthetic Embedding**: CLIP-style or modern vision-language embedder on the inspiration image(s) → vector.  
-2. **Catalog Retrieval**: pgvector similarity search against pre-computed product image / style embeddings, filtered by selected finishes and functional type (base/wall/tall + appliances).  
-3. **Combinatorial Optimizer**: Multi-objective solver that maximizes storage volume (primary) subject to layout constraints and a design-similarity soft constraint. Prefer established solvers (cuOpt if available in environment, or OR-Tools / simple greedy + local search for minimal dependency).  
-4. **Verification Loop**: Hard constraint check against the floorplan polygons produced by Raster2Seq (no collisions, openings respected, circulation preserved). Soft score for design feel.  
-5. **One-shot Assembly**: Emit complete placement list (SKU + pose + size variant) that is catalog-deterministic.
+1. **Hexaly**: Native C++ core + full API.
+
 
 **Models for (2-b)**:
 - **Plan**: Grok-4.5 (layout-aware planning + storage reasoning).  
 - **Review / Test**: Lightweight constrained checker (C++ or Python tool) + Grok-4.5 for aesthetic judgment.  
 - **Code / Implement**: The optimizer + placement emitter (deterministic code, not LLM generation of geometry).  
 - **Generation assist (optional high-fidelity textures or alternative views)**: Cosmos 3 Nano or 4-Step distilled variants.
-
-**Libraries / Frameworks (sequence)**:
-1. Aesthetic embedder (open CLIP / SigLIP or equivalent via Hugging Face).  
-2. pgvector catalog query.  
-3. Layout constraint engine (polygon intersection via shapely or C++ equivalent) operating on Raster2Seq polygons.  
-4. Multi-objective optimizer.  
-5. Scene graph assembler → Three.js / glTF export.  
-6. Cosmos path only if additional visual synthesis is required after the deterministic placement is locked.
-
-**Why this is the production leader for efficiency**:  
-Retrieval + constrained combinatorial search is far cheaper in tokens than pure generative one-shot scene synthesis. The floorplan already supplies the hard combinatorial space (via Raster2Seq polygons); the inspiration image only modulates ranking. This keeps high-volume loops inside the efficient C++ runtime + database.
 
 ### 3.3 Orchestration Decision: Single-Process vs Multi-Agent
 
@@ -308,8 +277,8 @@ docker compose up -d
 
 ## 6. Full User Flow Mapping (Hardened)
 
-1. **Upload floorplan** (PDF / text / image) in Open WebUI → agent → `parse_and_map_floorplan` (Raster2Seq primary engine) → layout written to Postgres + 2D viewer updated → 3D auto-derived. User can correct 2D geometry before proceeding.  
-2. **Select finishes + upload inspiration** → agent → aesthetic embed + catalog retrieval + multi-objective optimizer (70–80% storage, 20–30% design) → constraint verification against the *Raster2Seq-reconstructed* layout → complete placement list.  
+1. **Upload floorplan** (multi-modal user input) in Open WebUI → agent → `parse_and_map_floorplan` (Raster2Seq primary engine) → layout written to Postgres + 2D viewer updated → 3D auto-derived. 2D+3D viewers interactive and editable.
+2. **Select finishes + upload inspiration** → agent → catalog retrieval + → constraint verification against the *Raster2Seq-reconstructed* layout → complete placement list.  
 3. **One-shot render** of the verified system in the Three.js / openPlan3D viewer.  
 4. **Iterative refinement** via Grok-4.5 + constrained tools.  
 5. **Background autonomous exploration** runs entirely against the C++ runtime.
@@ -319,15 +288,7 @@ docker compose up -d
 ## 7. Production Readiness Checklist
 
 - [ ] Raster2Seq pipeline produces identical geometry for identical inputs.  
-- [ ] 2D viewer is authoritative; 3D is derived from Raster2Seq polygons.  
-- [ ] Catalog placements are hard-constrained to the reconstructed layout.  
-- [ ] First kitchen output targets 70–80% storage / 20–30% design feel.  
-- [ ] Single-process C++ primary loop with only controlled parallel tools.  
-- [ ] Prefix caching, quantization, GBNF active.  
-- [ ] All model routing decisions logged.  
 - [ ] E2E tests cover the full critical path.  
-- [ ] Observability and audit logs operational.  
-- [ ] Deployable from this document alone on 2026-08-01.
 
 ---
 
@@ -368,8 +329,3 @@ docker compose up -d
 | openPlan3D | https://github.com/laanlabs/openPlan3D | 2D/3D viewer |
 | Three.js | https://threejs.org | Web 3D rendering |
 | Neon | https://neon.tech | Postgres + pgvector data plane |
-
-**This Document is the authoritative, hardened, and complete engineering blueprint.**  
-It prioritizes accurate floorplan reconstruction via Raster2Seq (https://github.com/Cornell-VAILab/Raster2Seq) as the non-negotiable foundation, selects the production-proven catalog-mapping leaders available on 2026-08-01, retains single-process C++ efficiency while allowing controlled parallelism, and incorporates additional established tooling that measurably improves UX and geometric fidelity.  
-
-Execute the phases in order. The resulting system meets every stated requirement for Extreme Token Efficiency, Commoditized Intelligence Pricing, and the full kitchen planning user flow.
