@@ -1,0 +1,43 @@
+site_name: "PLANNER AI"
+site_url: https://github.io
+
+theme:
+  name: material
+  custom_dir: overrides  # Points directly to overrides sibling path
+  palette:
+    scheme: slate        # Activates native dark theme canvas
+    primary: indigo
+    accent: blue
+  features:
+    - navigation.sections # Collapsible sections
+    - navigation.expand   # Expanded sidebar by default
+    - content.code.copy   # Immediate schema copy feature for researchers
+
+plugins:
+  - search
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences # Allows Mermaid.js topological rendering natively
+
+nav:
+  - 'Project Overview':
+    - 'Manifest Home': index.md
+    - 'Goals & Success Criteria': 01_goals_criteria.md
+  - 'Core Engineering Authority':
+    - 'System Overview': 02_system_overview.md
+    - 'Architecture Overview': 03_architecture_overview.md
+    - 'Task 1: parse_and_map_floorplan': 04_task_seq_1.md
+    - 'Task 2: optimize_kitchen': 05_task_seq_2.md
+    - 'Additional Tooling': 06_tooling.md
+    - 'System Implementation': 07_implementation.md
+    - 'User Flow': 08_user_flow.md
+    - 'System Readiness': 09_readiness.md
+    - 'Sources': 10_sources.md
+    - 'Citations': 11_citations.md
+
+  - 'Operational Registry':
+    - 'Component Allocation (NASA SP-2016-6105 Rev2)': AGENTS.md

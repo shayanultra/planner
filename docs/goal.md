@@ -91,9 +91,13 @@
 
 ## 3. Critical Task Analysis & Superior Solutions (2026-08-01)
 
-### 3.1 Task Sequence 1 — `parse_and_map_floorplan`
+# 3.1 Task Sequence 1 — `parse_and_map_floorplan`
 
-**Requirement**: User multi-modal input input produces 98% accuracy 2D reconstruction.
+## Objectives
+**Objective #1**: Generate a 2D floorplan the from User's multi-modal input.
+**Objective #2**: Achieve 98% accuracy output across 10,000 generated 2D floorplans.
+**Objective #3**: Achieve average time-to-output of 2.0 seconds across 10,000 generated 2D floorplans.
+
 **Superior Production Solution (verified 2026-08-01)**: Raster2Seq.
 **Raster2Seq official github**: https://github.com/Cornell-VAILab/Raster2Seq
 **Raster2Seq paper**: https://arxiv.org/abs/2602.09016  
@@ -139,23 +143,21 @@
 1. Raster2Seq inference (official code from https://github.com/Cornell-VAILab/Raster2Seq + checkpoint from https://huggingface.co/haopt/Raster2Seq).  
 2. Write structured layout JSON (polygons + semantics + scale) to Postgres.  
 
-### 3.2 Task Sequence 2 — `optimize_kitchen` (Finishes + Inspiration → Complete System)
+# 3.2 Task Sequence 2 — `optimize_kitchen` (Finishes + Inspiration → Complete System)
 
-**Sub-sequence**:
-- (2-a) User selects finishes (UI bound to catalog) + uploads inspiration photo(s).  
-- (2-b) Agent plans → reviews → tests → implements the optimized kitchen.  
-- (2-c) Complete system rendered in one shot only after verification.
+## Sub-sequence
+* **(2-a)** (i) User submits cabinet finishes (UI wizard-to-catlog) + (ii) User's multi-modal input of design aspiration/goals.  
+* **(2-b)** Solver ingests User's multi-modal design aspiration + goals (2-a-ii)  → 3D Viewer outputs full results.
 
-**Superior Production Leader for Single-Image → Extreme Token Efficiency Catalog Mapping (2026-08-01)**:
+## Production Leader for Extreme Token Efficiency Catalog Mapping
+* **Hexaly Product Solvers**: Native C++ core + full API.
+* **Google OR-Tools CP-SAT**: fallback solver. 
 
-1. **Hexaly**: Native C++ core + full API.
-
-
-**Models for (2-b)**:
-- **Plan**: Grok-4.5 (layout-aware planning + storage reasoning).  
-- **Review / Test**: Lightweight constrained checker (C++ or Python tool) + Grok-4.5 for aesthetic judgment.  
-- **Code / Implement**: The optimizer + placement emitter (deterministic code, not LLM generation of geometry).  
-- **Generation assist (optional high-fidelity textures or alternative views)**: Cosmos 3 Nano or 4-Step distilled variants.
+## Model Task Matrix for (2-b)
+* **Plan**: Grok-4.5 (layout-aware planning + storage reasoning).  
+* **Review / Test**: Lightweight constrained checker (C++ or Python tool) + Grok-4.5 for aesthetic judgment.  
+* **Code / Implement**: The optimizer + placement emitter (deterministic code, not LLM generation of geometry).  
+* **Generation assist**: Cosmos 3 Nano or 4-Step distilled variants.
 
 ### 3.3 Orchestration Decision: Single-Process vs Multi-Agent
 

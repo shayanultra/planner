@@ -1,0 +1,32 @@
+name: Deploy Planner-AI-Docs
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'docs/planner-docs/**'
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python Runtime Environment
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install Architecture Engine & Plugins
+        run: |
+          python -m pip upgrade pip
+          pip install mkdocs-material
+
+      - name: Compile and Deploy to GitHub Pages
+        run: |
+          cd docs/planner-docs
+          mkdocs gh-deploy --force

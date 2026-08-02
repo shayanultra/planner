@@ -1,9 +1,115 @@
+# =============================================================================
+# planner-ai — root .gitignore (GitHub-safe product monorepo)
+# =============================================================================
+# Product surface: services/, tests/, db/, docs/goal|adr|agents|session|templates,
+# AGENTS.md, CONTEXT.md, openwiki/, .scratch/, .github/, .agents/
+# Vendored upstream clones stay local (nested .git); do not push as gitlinks.
+# Architecture authority: docs/goal.md · Agent ops: AGENTS.md
+# =============================================================================
+
+# --- Python environments & caches ---
 .venv/
+.venv-*/
+**/.venv/
 __pycache__/
-*.pyc
-.DS_Store
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+dist/
+build/
+*.so
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+.hypothesis/
+.dmypy.json
+dmypy.json
+
+# --- Secrets & local env ---
 .env
 .env.*
-Raster2Seq/checkpoints/
+!.env.example
+!.env.sample
+*.pem
+*.key
+secrets/
+**/credentials
+
+# --- OS / editor ---
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+*.code-workspace
+
+# --- Model weights & checkpoints (never push) ---
+**/checkpoints/
 *.pth
+*.pt
+*.ckpt
+*.safetensors
+*.onnx
+*.gguf
+*.ggml
+# Note: no blanket *.bin (can hit legitimate small assets)
+
+# --- Node / frontend build noise (portal / viewers later) ---
+node_modules/
+.npm/
+.next/
+.svelte-kit/
+.turbo/
+dist-ssr/
+
+# --- Local issue-tracker claim locks ---
 .scratch/**/claimed-by
+
+# --- Large reference PDFs under docs/ (keep intentional .md docs) ---
+docs/*.pdf
+
+# =============================================================================
+# Vendored upstream clones (local workspace only — nested .git repos)
+# Clone/update these separately; optional future: git submodules.
+# =============================================================================
+Raster2Seq/
+detectron2/
+llama.cpp/
+llama-agent/
+chatllm.cpp/
+open-webui/
+open-webui-desktop/
+openPlan3D/
+three.js/
+pgvector/
+helm-charts/
+cosmos-framework/
+RAGnaroX/
+native/
+json-render/
+next-beats/
+bike-shop-agent/
+kitchen-designer/
+
+# Third-party / research clones under docs/ (multi-GB; not product docs)
+docs/cosmos/
+docs/cosmos-curator/
+docs/cosmos-evaluator/
+docs/cosmos-policy/
+docs/neon-docs-website/
+docs/neon-examples/
+docs/neon-pkgs/
+docs/neon-agent-skills/
+docs/neon-for-agent-platforms/
+docs/mcp-server-neon/
+docs/openwebui-docs/
+docs/postgres-skills/
+docs/three.js.wiki/
