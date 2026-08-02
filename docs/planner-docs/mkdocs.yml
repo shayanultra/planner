@@ -1,5 +1,5 @@
 site_name: "PLANNER AI"
-site_url: https://github.io
+site_url: https://shayanultra.github.io/planner/
 
 theme:
   name: material
@@ -37,7 +37,10 @@ nav:
     - 'User Flow': 08_user_flow.md
     - 'System Readiness': 09_readiness.md
     - 'Sources': 10_sources.md
-    - 'Citations': 11_citations.md
+    - 'Citations': 11_citation.md
 
   - 'Operational Registry':
     - 'Component Allocation (NASA SP-2016-6105 Rev2)': AGENTS.md
+  
+  - 'Research':
+    - 'RAGnaroX': RAGnaroX.md
