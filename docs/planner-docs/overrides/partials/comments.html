@@ -1,16 +1,82 @@
-<script src="https://giscus.app/client.js"
-        data-repo="shayanultra/planner"
-        data-repo-id="R_kgDOTrARYQ"
-        data-category="Ideas"
-        data-category-id="DIC_kwDOTrARYc4DCgqB"
-        data-mapping="pathname"
-        data-strict="1"
-        data-reactions-enabled="0"
-        data-emit-metadata="0"
-        data-input-position="top"
-        data-theme="catppuccin_macchiato"
-        data-lang="en"
-        data-loading="lazy"
-        crossorigin="anonymous"
-        async>
+<!--
+  Giscus: bind by discussion NUMBER (from giscus_mapping.json), not pathname title search.
+  Storage is still GitHub Discussions; display is this iframe on each docs page.
+  Success metric: open the docs URL and see comments here — not only on github.com/discussions.
+-->
+<script>
+(function () {
+  // Keep in sync with docs/planner-docs/giscus_mapping.json pages.*.number
+  var PATH_TO_NUMBER = {
+    "/planner/": 2,
+    "/planner/index.html": 2,
+    "/planner/01_goals_criteria/": 3,
+    "/planner/01_goals_criteria/index.html": 3,
+    "/planner/02_system_overview/": 4,
+    "/planner/02_system_overview/index.html": 4,
+    "/planner/03_architecture_overview/": 5,
+    "/planner/03_architecture_overview/index.html": 5,
+    "/planner/04_task_seq_1/": 6,
+    "/planner/04_task_seq_1/index.html": 6,
+    "/planner/05_task_seq_2/": 7,
+    "/planner/05_task_seq_2/index.html": 7,
+    "/planner/06_tooling/": 8,
+    "/planner/06_tooling/index.html": 8,
+    "/planner/07_implementation/": 9,
+    "/planner/07_implementation/index.html": 9,
+    "/planner/08_user_flow/": 10,
+    "/planner/08_user_flow/index.html": 10,
+    "/planner/09_readiness/": 11,
+    "/planner/09_readiness/index.html": 11,
+    "/planner/10_sources/": 12,
+    "/planner/10_sources/index.html": 12,
+    "/planner/11_citation/": 13,
+    "/planner/11_citation/index.html": 13,
+    "/planner/AGENTS/": 14,
+    "/planner/AGENTS/index.html": 14,
+    "/planner/RAGnaroX/": 15,
+    "/planner/RAGnaroX/index.html": 15,
+    "/planner/agent_giscus_access/": 2,
+    "/planner/agent_giscus_access/index.html": 2
+  };
+
+  function normalizePath(p) {
+    if (!p) return "/";
+    if (p.length > 1 && p.endsWith("/")) return p;
+    if (p.endsWith("/index.html")) return p;
+    if (p.endsWith(".html")) return p;
+    return p.endsWith("/") ? p : p + "/";
+  }
+
+  var path = window.location.pathname || "/";
+  var num =
+    PATH_TO_NUMBER[path] ||
+    PATH_TO_NUMBER[normalizePath(path)] ||
+    PATH_TO_NUMBER[path.replace(/\/?$/, "/")] ||
+    PATH_TO_NUMBER[path + "index.html"];
+
+  if (!num) {
+    console.warn("[giscus] no discussion number for pathname:", path);
+    return;
+  }
+
+  var s = document.createElement("script");
+  s.src = "https://giscus.app/client.js";
+  s.async = true;
+  s.crossOrigin = "anonymous";
+  s.setAttribute("data-repo", "shayanultra/planner");
+  s.setAttribute("data-repo-id", "R_kgDOTrARYQ");
+  s.setAttribute("data-category", "Ideas");
+  s.setAttribute("data-category-id", "DIC_kwDOTrARYc4DCgqB");
+  s.setAttribute("data-mapping", "number");
+  s.setAttribute("data-term", String(num));
+  s.setAttribute("data-strict", "0");
+  s.setAttribute("data-reactions-enabled", "0");
+  s.setAttribute("data-emit-metadata", "0");
+  s.setAttribute("data-input-position", "top");
+  s.setAttribute("data-theme", "catppuccin_macchiato");
+  s.setAttribute("data-lang", "en");
+  // eager load so comments are visible without relying on lazy intersection
+  s.setAttribute("data-loading", "eager");
+  document.currentScript.parentNode.insertBefore(s, document.currentScript.nextSibling);
+})();
 </script>
