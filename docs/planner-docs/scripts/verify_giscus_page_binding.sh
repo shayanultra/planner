@@ -2,6 +2,7 @@
 # Acceptance: each docs page's Giscus binding resolves a discussion with UTTR content.
 # Success = giscus.app API for that page term returns comments matching UTTR/RAGnaroX
 # (proxy for "visible on https://shayanultra.github.io/planner/<page>/").
+# Also fails if UTTR-matching comments still contain HTML pollution markers.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/../../.." && pwd)"
@@ -64,8 +65,22 @@ for slug in required:
     count = disc.get("totalCommentCount") or 0
     comments = disc.get("comments") or []
     bodies = " ".join((c.get("bodyHTML") or c.get("body") or "") for c in comments)
+    raw_bodies = " ".join((c.get("body") or "") for c in comments)
+    # bodyHTML is rendered HTML from Giscus API — pollution check uses raw body when present
+    pollution_src = raw_bodies if raw_bodies.strip() else bodies
     # also pull via number-only — if empty, try pathname for diagnostics
     has_uttr = ("UTTR" in bodies) or ("RAGnaroX" in bodies) or ("ragnarox" in bodies.lower())
+    # Raw HTML chrome that must not appear in Markdown UTTR comments
+    pollution_markers = (
+        "uttr-grid",
+        "policy-pane",
+        "mechanism-pane",
+        "ragnarox-uttr",
+        "<!DOCTYPE",
+    )
+    # Only flag if markers appear as author-authored chrome (class names / doctype),
+    # not incidental words in rendered HTML from Giscus.
+    polluted = any(m in pollution_src for m in pollution_markers)
 
     docs_url = page.get("docs_url") or f"https://shayanultra.github.io{pathname}"
     if count < 1:
@@ -79,8 +94,14 @@ for slug in required:
         # treat missing UTTR as fail for full transfer acceptance
         fail += 1
         continue
+    if polluted:
+        print(
+            f"FAIL {slug}: #{number} UTTR present but HTML pollution markers remain (docs: {docs_url})"
+        )
+        fail += 1
+        continue
 
-    print(f"PASS {slug}: #{number} comments={count} UTTR=yes docs={docs_url}")
+    print(f"PASS {slug}: #{number} comments={count} UTTR=yes clean-md=yes docs={docs_url}")
 
 print("---")
 if fail:

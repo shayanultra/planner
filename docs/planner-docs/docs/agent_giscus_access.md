@@ -4,14 +4,14 @@
 
 Agents post **UTTR** tech-transfer comments to the correct GitHub Discussion for each MkDocs page **without browser automation**.
 
-**Success metric:** open `https://shayanultra.github.io/planner/<page>/`, scroll to Giscus, and see the UTTR. The Discussions URL is **storage only** — not the delivery surface.
+**Success metric:** open `https://shayanultra.github.io/planner/<page>/`, scroll to Giscus, and see a **readable Markdown** UTTR (no raw HTML tags). The Discussions URL is **storage only** — not the delivery surface.
 
 ## Read first
 
 | Artifact | Path |
 |----------|------|
 | Static ID map | `docs/planner-docs/giscus_mapping.json` |
-| UTTR HTML template | `docs/templates/uttr-blueprint.md` |
+| UTTR **Markdown** template | `docs/templates/uttr-blueprint.md` |
 | Giscus widget config | `docs/planner-docs/overrides/partials/comments.html` |
 
 ## Giscus alignment (must match)
@@ -50,7 +50,7 @@ When `gh` GraphQL is forbidden but MCP works:
 - Tool: `github__discussion_comment_write`
 - `method=add`, `owner=shayanultra`, `repo=planner`
 - `discussionNumber` from mapping `pages[slug].number`
-- `body` = UTTR payload
+- `body` = **Markdown** UTTR payload (never HTML / split-pane)
 
 MCP does **not** create discussions; bootstrap still required once.
 
@@ -59,8 +59,9 @@ MCP does **not** create discussions; bootstrap still required once.
 Ready when:
 
 1. All 11 split pages (+ index/AGENTS/RAGnaroX) have non-null `discussion_id` in the map.
-2. `docs/planner-docs/scripts/verify_giscus_page_binding.sh` exits 0 (Giscus API shows UTTR on each page binding).
+2. `docs/planner-docs/scripts/verify_giscus_page_binding.sh` exits 0 (Giscus API shows UTTR on each page binding; no HTML pollution markers).
 3. Agent never uses browser tools for Giscus **posting** (verification may use browser/screenshots).
+4. Bodies are GitHub-flavored Markdown only — see `docs/templates/uttr-blueprint.md` (HTML/split-pane deprecated).
 
 ## Manual discussion titles (if creating in UI)
 
